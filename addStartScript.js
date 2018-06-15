@@ -5,7 +5,7 @@ const packagePath = path.resolve(__dirname, '../../package.json')
 
 const package = require(packagePath)
 
-const scripts = package.scripts
+const scripts = package.scripts || {}
 
 Object.assign(scripts, {
   start: 'node node_modules/react-template-preview/index.js'
