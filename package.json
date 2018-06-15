@@ -1,0 +1,14 @@
+{
+  "name": "react-template-preview",
+  "version": "1.0.26",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node addStartScript.js"
+  },
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4"
+  }
+}
