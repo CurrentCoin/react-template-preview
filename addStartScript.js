@@ -8,7 +8,7 @@ const package = require(packagePath)
 const scripts = package.scripts || {}
 
 Object.assign(scripts, {
-  start: 'nodemon -e js,json,css node_modules/react-template-preview/index.js'
+  start: 'BROWSER=none nodemon -e js,json,css node_modules/react-template-preview/index.js'
 })
 
 Object.assign(package, { 'scripts': scripts })
