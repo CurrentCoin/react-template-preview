@@ -1,47 +1,28 @@
-const cp = require('child_process')
-const fs = require('fs')
 const path = require('path')
+// Asynchronous recursive file & directory copying
+const ncp = require('ncp').ncp
 
-fs.readdir(path.resolve(__dirname, '../..'), (error, files) => {
-  const filteredFiles = files.filter(file => {
-    return file !== 'node_modules'
-      && file !== 'yarn.lock'
-      && file !== 'package-lock.json'
-      && file !== 'package.json'
-      && file.slice(0, 1) !== '.'
-  })
+const userTemplateDir = path.resolve(__dirname, '../..')
+const libraryTemplateDir = path.resolve(__dirname, 'src/template')
 
-  Promise.all( filteredFiles.map(file => copyFile(file)) )
-    .then(() => {
-      const startScript = cp.spawn('react-scripts', ['start'], {
-        cwd: __dirname
-      })
-
-      startScript.stdout.on('data', data => console.log(data.toString()))
-      startScript.stderr.on('data', error => console.error(error.toString()))
-      startScript.on('close', code => {
-        console.log('in close event with code', code)
-        if (code) {
-          console.log('in close event with code', code)
-          return
-        }
-      })
-    })
-    .catch(error => console.log('error:', error))
-})
-
-function copyFile(fileName) {
-  return new Promise((resolve, reject) => {
-    fs.copyFile(
-      path.resolve(__dirname, `../../${fileName}`),
-      path.resolve(__dirname, `./src/template/${fileName}`),
-      error => {
-        if (error) {
-          reject(error)
-        } else {
-          resolve()
-        }
-      }
-    )
-  })
+const filter = fileName => {
+  if (
+    fileName.includes('/.')
+    || fileName.includes('node_modules')
+    || fileName.includes('yarn.lock')
+    || fileName.includes('package-lock.json')
+    || fileName.includes('package.json')
+  ) {
+    return false
+  } else {
+    return true
+  }
 }
+
+ncp(userTemplateDir, libraryTemplateDir, { filter }, error => {
+  if (error) {
+    console.log(error)
+  } else {
+    console.log('files copied successfully')
+  }
+})

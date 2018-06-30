@@ -1,12 +1,13 @@
 {
   "name": "react-template-preview",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "description": "",
   "main": "index.js",
   "scripts": {
     "postinstall": "node addStartScript.js"
   },
   "dependencies": {
+    "ncp": "^2.0.0",
     "nodemon": "^1.17.5",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
