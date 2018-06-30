@@ -24,5 +24,19 @@ ncp(userTemplateDir, libraryTemplateDir, { filter }, error => {
     console.log(error)
   } else {
     console.log('files copied successfully')
+
+    const startScript = cp.spawn('react-scripts', ['start'], {
+      cwd: __dirname
+    })
+
+    startScript.stdout.on('data', data => console.log(data.toString()))
+    startScript.stderr.on('data', error => console.error(error.toString()))
+    startScript.on('close', code => {
+      console.log('in close event with code', code)
+      if (code) {
+        console.log('in close event with code', code)
+        return
+      }
+    })
   }
 })
