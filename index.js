@@ -1,4 +1,5 @@
 const path = require('path')
+const { spawn } = require('child_process')
 // Asynchronous recursive file & directory copying
 const ncp = require('ncp').ncp
 
@@ -25,7 +26,7 @@ ncp(userTemplateDir, libraryTemplateDir, { filter }, error => {
   } else {
     console.log('files copied successfully')
 
-    const startScript = cp.spawn('react-scripts', ['start'], {
+    const startScript = spawn('react-scripts', ['start'], {
       cwd: __dirname
     })
 
